@@ -49,13 +49,13 @@ if (!isset($_COOKIE['account'])) {
                 echo    "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
-                foreach ($taught->fetch(PDO::FETCH_ASSOC) as $id) {
+                foreach ($taught->fetchAll(PDO::FETCH_ASSOC) as $id) {
                     $title = $dbh->prepare("select title from courses where id=:id");
-                    $title->execute(array('id' => $id));
+                    $title->execute(array('id' => $id['id']));
                     $numStudents = $dbh->prepare("select count(account) from takes where id=:id");
-                    $numStudents->execute(array('id' => $id));
-                    echo "<tr onclick='document.location = \"classDetails.php?id=".$id."\"'>";
-                    echo "<th scope='row'>".$id."</th>";
+                    $numStudents->execute(array('id' => $id['id']));
+                    echo "<tr onclick='document.location = \"classDetails.php?id=".$id['id']."\"'>";
+                    echo "<th scope='row'>".$id['id']."</th>";
                     echo "<td>".$title->fetchColumn(0)."</td>";
                     echo "<td>".$numStudents->fetchColumn(0)."</td>";
                     echo "</tr>";

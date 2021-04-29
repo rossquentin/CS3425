@@ -52,15 +52,15 @@ if (!isset($_COOKIE['account'])) {
 
 				if ($question[1] == 1 || $question[1] == 'Multiple Choice') {
 					echo "<tr>";
-					echo 	"<td style='text-align:center'><input class='col' type='radio' name='q_no_".$questionNum."' value='1'>Strongly Disagree</input></td>";
-					echo 	"<td style='text-align:center'><input class='col' type='radio' name='q_no_".$questionNum."' value='2'>Disagree</input></td>";
-					echo 	"<td style='text-align:center'><input class='col' type='radio' name='q_no_".$questionNum."' value='3' checked>Neutral</input></td>";
-					echo 	"<td style='text-align:center'><input class='col' type='radio' name='q_no_".$questionNum."' value='4'>Agree</input></td>";
-					echo 	"<td style='text-align:center'><input class='col' type='radio' name='q_no_".$questionNum."' value='5'>Strongly Agree</input></td>";
+					echo 	"<td style='text-align:center'><input class='col' type='radio' name='q_no_".$questionNum."' value='1' required>Strongly Disagree</input></td>";
+					echo 	"<td style='text-align:center'><input class='col' type='radio' name='q_no_".$questionNum."' value='2' required>Disagree</input></td>";
+					echo 	"<td style='text-align:center'><input class='col' type='radio' name='q_no_".$questionNum."' value='3' required>Neutral</input></td>";
+					echo 	"<td style='text-align:center'><input class='col' type='radio' name='q_no_".$questionNum."' value='4' required>Agree</input></td>";
+					echo 	"<td style='text-align:center'><input class='col' type='radio' name='q_no_".$questionNum."' value='5' required>Strongly Agree</input></td>";
 					echo "</tr>";
 				} else {
 					echo "<tr>";
-					echo	"<td><textarea class='form-control' name='q_no_".$questionNum."' placeholder='Input your answer' rows='3'></textarea></td>";
+					echo	"<td><textarea class='form-control' name='q_no_".$questionNum."' placeholder='Input your answer' rows='3' required></textarea></td>";
 					echo "</tr>";
 				}
 				echo "</tbody>";

@@ -56,11 +56,6 @@ if (!isset($_COOKIE['account'])) {
 				echo    "<tr>";
 				echo    "<th colspan='11'>" . $instructorName . "</th>";
 				echo    "</tr>";
-				echo    "<tr>";
-				echo    "<th> Response Rate </th>";
-				echo    "<td colspan='4'>" . number_format((float)($total / $numStudents * 100), 2, '.', '') . "% (" . $total . "/" . $numStudents . ") </td>";
-				echo    "</tr>";
-
 
 				if ($questions[1] == 1 || $questions[1] == 'Multiple Choice') {
 					$i = 1;
@@ -89,6 +84,15 @@ if (!isset($_COOKIE['account'])) {
 								break;
 						}
 					}
+					$mean = ($total > 0) ? number_format((float)($one + $two*2 + $three*3 + $four*4 + $five*5)/$total, 2, '.', '') : 0.00; 
+					$std =  ($total > 1) ? number_format((float)standard_deviation(array($one, $two*2, $three*3, $four*4, $five*5)), 2, '.', '') : 0.00;
+					$median = array();
+					$median = array_pad($median, $one, 1);
+					$median = array_pad($median, $one + $two, 2);
+					$median = array_pad($median, $one + $two + $three, 3);
+					$median = array_pad($median, $one + $two + $three + $four, 4);
+					$median = array_pad($median, $one + $two + $three + $four + $five, 5);
+					$median =  number_format((float)getMedian($median), 2, '.', '');
 
 					echo    "<tr>";
 					echo    "<th> Response Option </th>";
@@ -153,9 +157,28 @@ if (!isset($_COOKIE['account'])) {
 								}
 								break;
 						}
-						echo "</tr>";
 					}
+					echo "</tr>";
+						echo "</tbody>";
+						echo "<thead>";
+						echo "<tr>";
+						echo    "<th style='text-align:center'> Response Rate </th>";
+						echo 	"<th style='text-align:center'> Mean </td>";
+						echo	"<th style='text-align:center'> STD </td>";
+						echo	"<th style='text-align:center'> Median </td>";
+						echo "</tr>";
+						echo "</thead>";
+						echo "<tbody>";
+						echo "<tr>";
+						echo    "<td style='text-align:center'>" . number_format((float)($total / $numStudents * 100), 2, '.', '') . "% (" . $total . "/" . $numStudents . ") </td>";
+						echo	"<td style='text-align:center'> ".$mean." </td>";
+						echo	"<td style='text-align:center'> ".$std." </td>";
+						echo	"<td style='text-align:center'> ".$median." </td>";
 				} else {
+					echo    "<tr>";
+					echo    "<th> Response Rate </th>";
+					echo    "<td colspan='4'>" . number_format((float)($total / $numStudents * 100), 2, '.', '') . "% (" . $total . "/" . $numStudents . ") </td>";
+					echo    "</tr>";
 					echo "</thead>";
 					echo "<tbody>";
 					echo "<tr>";
@@ -183,3 +206,23 @@ if (!isset($_COOKIE['account'])) {
 </body>
 
 </html>
+
+<?php
+
+function standard_deviation($aValues, $bSample = false)
+{
+    $fMean = array_sum($aValues) / count($aValues);
+    $fVariance = 0.0;
+    foreach ($aValues as $i)
+    {
+        $fVariance += pow($i - $fMean, 2);
+    }
+    $fVariance /= ( $bSample ? count($aValues) - 1 : count($aValues) );
+    return (float) sqrt($fVariance);
+}
+
+function getMedian($arr) {
+    return (count($arr) > 0) ? array_sum($arr) / count($arr) : 0;
+}
+
+?>
